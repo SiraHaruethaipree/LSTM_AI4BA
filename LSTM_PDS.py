@@ -166,14 +166,14 @@ def LSTM_process(*arg):
   X_train_log, y_train_log,X_test_log, y_test_log = split_train_test_xy_log(X_log_1,y_log)
   X_train_log, X_test_log = reshape_test_log(X_train_log, X_test_log)
   model = LSTM_model(X_train_log,y_train_log,X_test_log,y_test_log,time_step)
-  history = model.fit(X_train_log, y_train_log, validation_data=(X_test_log, y_test_log), batch_size=32, epochs=50, verbose=0)
+  history = model.fit(X_train_log, y_train_log, validation_data=(X_test_log, y_test_log), batch_size=128, epochs=50, verbose=0)
   X_prod_1 = multi_output_dataset_for_test(series_log_1, time_step)
   price = pred_sc(model,X_prod_1,sc_1,df,data)
   price_df = create_df(price, data)
   return price_df
 
 
-START = "2015-01-01"
+START = "2019-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
 st.title('Stock Forecast App AI4BA')
