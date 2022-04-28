@@ -1,6 +1,5 @@
+pip == 22.0.4
 beautifulsoup4==4.11.1
-pystan==2.19.1.1
-fbprophet==0.7.1
 keras==2.8.0
 numpy==1.19.2
 pandas==1.2.5
