@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 import requests
 
 import yfinance as yf
-from fbprophet import Prophet
-from fbprophet.plot import plot_plotly
 from plotly import graph_objs as go
 
 import tensorflow as tf
@@ -20,7 +18,6 @@ import numpy as np
 tf.random.set_seed(42)
 np.random.seed(42)
 
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 df1 = pd.read_csv("top5_stock.csv", index_col = False)
 #df2 = df1.copy()
