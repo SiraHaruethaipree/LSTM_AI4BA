@@ -194,7 +194,11 @@ st.sidebar.subheader("Top 5 DOW30")
 st.sidebar.dataframe(df2)
 st.sidebar.subheader("Top 5 NASDAQ100")
 st.sidebar.dataframe(df3)
-
+st.sidebar.subheader("Create by")
+st.sidebar.write("Sira Haruethaipree")
+st.sidebar.write("Naphat Chapha")
+st.sidebar.write("Siriluk Leesakoon")
+st.sidebar.write("Watewiboon Pumipue")
 
 @st.cache
 def load_data(ticker):
