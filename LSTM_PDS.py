@@ -20,10 +20,10 @@ np.random.seed(42)
 
 
 df1 = pd.read_csv("top5_stock.csv", index_col = False)
+df1 = df1.set_index("Stock")
 #df2 = df1.copy()
 #df2 = df2.iloc[:3]
 
-pd.options.display.float_format = "{:,.2f}".format
 
 def dow30():
     dow_30 = []
@@ -185,7 +185,7 @@ selected_stock = st.selectbox('Select dataset for prediction', selectionstock())
 # n_years = st.slider('Years of prediction:', 1, 4)
 # period = n_years*365
 
-st.sidebar.title("7 days Recommend")
+st.sidebar.header("7 days Recommend")
 st.sidebar.subheader("Top 5 SET100")
 st.sidebar.dataframe(df1)
 #st.sidebar.write("Top XX DOW30")
@@ -229,6 +229,7 @@ with st.spinner('Wait for train model...'):
     price_df1 = price_df1.astype({'pred': 'float64'})
     price_df1 = price_df1.replace(np.nan, "-")
     pred_list = price_df["pred"].dropna().tolist()
+    price_df1.rename(columns={'pred': 'Predict'}, inplace=True)
     percent = ((pred_list[-1]/pred_list[0]) * 100) - 100
 
 #price_df1 = price_df1.set_index("Date")
@@ -236,8 +237,14 @@ with st.spinner('Wait for train model...'):
 #price_df2 = price_df1.replace("-", 0)
 #price_df2 = price_df1.astype('str').dtypes
 
-st.write(price_df1.tail(7))
-st.metric(label="Day 7", value="{:.2f}".format(pred_list[-1]), delta= "{:.2f}%".format(percent))
+col1, col2 = st.columns(2)
+with col1:
+    st.write(price_df1.tail(7))
+with col2:
+    st.metric(label="Day 7", value="{:.2f}".format(pred_list[-1]), delta= "{:.2f}%".format(percent))
+
+#st.write(price_df1.tail(7))
+#st.metric(label="Day 7", value="{:.2f}".format(pred_list[-1]), delta= "{:.2f}%".format(percent))
 
 price_df_gr = price_df.iloc[-100:]
 
