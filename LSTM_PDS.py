@@ -21,8 +21,10 @@ np.random.seed(42)
 
 df1 = pd.read_csv("top5_stock.csv", index_col = False)
 df1 = df1.set_index("Stock")
-#df2 = df1.copy()
-#df2 = df2.iloc[:3]
+df2 = pd.read_csv("top5_stocks_dji.csv")
+df2 = df2.set_index("Stock")
+df3 = pd.read_csv("top5_stocks_ndx.csv")
+df3 = df3.set_index("Stock")
 
 
 def dow30():
@@ -188,8 +190,11 @@ selected_stock = st.selectbox('Select dataset for prediction', selectionstock())
 st.sidebar.header("7 days Recommend")
 st.sidebar.subheader("Top 5 SET100")
 st.sidebar.dataframe(df1)
-#st.sidebar.write("Top XX DOW30")
-#st.sidebar.dataframe(df2)
+st.sidebar.subheader("Top 5 DOW30")
+st.sidebar.dataframe(df2)
+st.sidebar.subheader("Top 5 NASDAQ100")
+st.sidebar.dataframe(df3)
+
 
 @st.cache
 def load_data(ticker):
