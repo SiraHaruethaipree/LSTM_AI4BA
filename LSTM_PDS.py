@@ -9,6 +9,7 @@ import yfinance as yf
 from plotly import graph_objs as go
 
 import tensorflow as tf
+from tensorflow import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout
 from sklearn.preprocessing import StandardScaler
@@ -25,7 +26,7 @@ df2 = pd.read_csv("top5_stocks_dji.csv")
 df2 = df2.set_index("Stock")
 df3 = pd.read_csv("top5_stocks_ndx.csv")
 df3 = df3.set_index("Stock")
-
+model = keras.models.load_model("my_model.h5")
 
 def dow30():
     dow_30 = []
@@ -113,15 +114,15 @@ def reshape_test_log(X_train_log, X_test_log):
     X_test_log = X_test_log.reshape(X_test_log.shape[0], X_test_log.shape[1], 1)
     return X_train_log, X_test_log
 
-def LSTM_model(X_train_log,y_train_log,X_test_log,y_test_log, time_step):
-    tf.keras.backend.clear_session()
-    tf.random.set_seed(42)
-    model = Sequential()
-    model.add(LSTM(128, return_sequences=True))
-    model.add(LSTM(64))
-    model.add(Dense(7))
-    model.compile(loss='mse', optimizer='adam')
-    return model
+# def LSTM_model(X_train_log,y_train_log,X_test_log,y_test_log, time_step):
+#     tf.keras.backend.clear_session()
+#     tf.random.set_seed(42)
+#     model = Sequential()
+#     model.add(LSTM(128, return_sequences=True))
+#     model.add(LSTM(64))
+#     model.add(Dense(7))
+#     model.compile(loss='mse', optimizer='adam')
+#     return model
 
 def multi_output_dataset_for_test(dataset, time_step):
     Tx = time_step
@@ -167,8 +168,8 @@ def LSTM_process(*arg):
   X_log_1, y_log = multi_output_dataset(series_log_1, time_step)
   X_train_log, y_train_log,X_test_log, y_test_log = split_train_test_xy_log(X_log_1,y_log)
   X_train_log, X_test_log = reshape_test_log(X_train_log, X_test_log)
-  model = LSTM_model(X_train_log,y_train_log,X_test_log,y_test_log,time_step)
-  history = model.fit(X_train_log, y_train_log, validation_data=(X_test_log, y_test_log), batch_size=128, epochs=50, verbose=0)
+#   model = LSTM_model(X_train_log,y_train_log,X_test_log,y_test_log,time_step)
+#   history = model.fit(X_train_log, y_train_log, validation_data=(X_test_log, y_test_log), batch_size=128, epochs=50, verbose=0)
   X_prod_1 = multi_output_dataset_for_test(series_log_1, time_step)
   price = pred_sc(model,X_prod_1,sc_1,df,data)
   price_df = create_df(price, data)
