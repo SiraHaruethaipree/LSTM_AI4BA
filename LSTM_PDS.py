@@ -64,6 +64,11 @@ def nasdaq100():
             nasdaq_100.append(st)
     return nasdaq_100
 
+def Crypto():
+    Crypto_list = ["BTC-USD","ETH-USD","USDT-USD","BNB-USD","SOL-USD","XRP-USD","LUNA1-USD","ADA-USD","BUSD-USD","DOGE-USD","AVAX-USD","DOT-USD",
+                   "MATIC-USD","NEAR-USD","LTC-USD","MANA-USD","SAND-USD","AAVE-USD","GALA-USD","KSM-USD","ZIL-USD","CRV-USD","BAT-USD","KUB-USD"]
+    return Crypto_list
+
 def selectionstock():
     list_stock = []
     if selected_market == "SET100" :
@@ -72,6 +77,8 @@ def selectionstock():
         list_stock = dow30()
     elif selected_market == "NASDAQ100":
         list_stock = nasdaq100()
+    elif selected_market == "Cryptocurrencies":
+        list_stock = Crypto()
     return list_stock
 
 
@@ -176,11 +183,11 @@ def LSTM_process(*arg):
   return price_df
 
 
-START = "2019-01-01"
+START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
 st.title('Stock Forecast App AI4BA')
-markets = ["DOW30","NASDAQ100","SET100"]
+markets = ["DOW30","NASDAQ100","SET100","Cryptocurrencies"]
 selected_market = st.selectbox('Select Market', markets)
 
 selected_stock = st.selectbox('Select dataset for prediction', selectionstock())
